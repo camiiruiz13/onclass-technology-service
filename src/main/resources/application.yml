@@ -9,7 +9,7 @@ spring:
 
   sql:
     init:
-      mode: always # para ejecutar schema.sql si lo usas
+      mode: always
       platform: mysql
 
   jackson:
@@ -22,3 +22,13 @@ logging:
   level:
     root: INFO
     org.springframework.data.r2dbc: DEBUG
+
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+  appDescripcion: API para visualizar la traza de los pedidos
+  appVersion: 1.0.0
