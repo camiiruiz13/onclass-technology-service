@@ -1,2 +1,11 @@
-# Auto detect text files and perform LF normalization
+# Detectar automáticamente archivos de texto y normalizar finales de línea (LF)
 * text=auto
+
+# Gradle Wrapper (script Unix con LF)
+gradlew text eol=lf
+
+# Scripts por lotes de Windows (CRLF)
+*.bat text eol=crlf
+
+# Archivos binarios
+*.jar binary
