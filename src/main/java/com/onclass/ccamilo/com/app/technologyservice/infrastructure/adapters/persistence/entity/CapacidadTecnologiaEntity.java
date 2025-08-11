@@ -1,4 +1,4 @@
-package com.onclass.ccamilo.com.app.technologyservice.infrastructure.adapters.entity;
+package com.onclass.ccamilo.com.app.technologyservice.infrastructure.adapters.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
