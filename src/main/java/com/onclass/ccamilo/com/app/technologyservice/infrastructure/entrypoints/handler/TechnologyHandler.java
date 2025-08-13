@@ -30,20 +30,19 @@ public class TechnologyHandler {
         return request.bodyToMono(TechnologyDTO.class)
                 .flatMap(req -> servicePort.create(technologyDTOMapper.toDomain(req)))
                 .map(technologyDTOMapper::toDto)
-                .doOnSuccess(resp -> ServerResponse
+                .doOnSuccess(resp -> log.info("Technology created. messageId={}", messageId))
+                .flatMap(resp -> ServerResponse
                         .status(HttpStatus.CREATED)
-                        .bodyValue(new SuccesResponseDTO(ErrorMessage.TECHNOLOGY_CREATED_SUCCESS_MESSAGE.getMessage(), null)))
+                        .bodyValue(new SuccesResponseDTO(ErrorMessage.TECHNOLOGY_CREATED_SUCCESS_MESSAGE.getMessage(), resp))
+                )
                 .doOnError(ex -> log.error("Error creating technology. messageId={}", messageId, ex))
-                .onErrorResume(BusinessException.class, ex ->
-                        buildError(HttpStatus.BAD_REQUEST, messageId, ErrorMessage.VALIDATION_ERROR)
+                .onErrorResume(BusinessException.class,
+                        ex -> buildError(HttpStatus.BAD_REQUEST, messageId, ErrorMessage.VALIDATION_ERROR)
                 )
-                .onErrorResume(TechnicalException.class, ex ->
-                        buildError(HttpStatus.INTERNAL_SERVER_ERROR, messageId, ErrorMessage.TECHNOLOGY_NAME_ALREADY_EXISTS)
-                )
-                .onErrorResume(Throwable.class, ex -> {
-                    log.error("Unexpected error occurred for messageId: {}", messageId, ex);
+                .onErrorResume(ex -> {
+                    log.error("Unexpected error occurred for messageId={}", messageId, ex);
                     return buildError(HttpStatus.INTERNAL_SERVER_ERROR, messageId, ErrorMessage.VALIDATION_ERROR);
-                })
+                });
 
 
 
