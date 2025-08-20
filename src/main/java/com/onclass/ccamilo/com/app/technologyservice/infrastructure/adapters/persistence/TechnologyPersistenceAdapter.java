@@ -21,7 +21,7 @@ public class TechnologyPersistenceAdapter implements TechnologyPersistencePort {
 
     @Override
     public Mono<Boolean> existsByNombre(String nombre) {
-        return repository.existsByNombre(nombre);
+        return repository.countByNombre(nombre).map(c -> c > 0);
     }
 
     @Override

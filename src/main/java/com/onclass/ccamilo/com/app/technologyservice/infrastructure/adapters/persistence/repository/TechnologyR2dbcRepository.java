@@ -6,6 +6,6 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import reactor.core.publisher.Mono;
 
 public interface TechnologyR2dbcRepository  extends ReactiveCrudRepository<TechnologyEntity, Long> {
-    @Query("SELECT  EXISTS(SELECT  1 FROM TECNOLOGIAS WHERE nombre = :nombre)")
-    Mono<Boolean> existsByNombre(String nombre);
+    @Query("SELECT COUNT(1) FROM TECNOLOGIAS WHERE nombre = :nombre")
+    Mono<Long> countByNombre(String nombre);
 }

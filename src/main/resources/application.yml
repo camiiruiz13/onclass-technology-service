@@ -3,14 +3,19 @@ spring:
     name: technologyservice
 
   r2dbc:
-    url: r2dbc:mysql://localhost:3306/onclass
+    url: r2dbc:mysql://localhost:3306/tecnologia
     username: root
     password: 12345
+    initialization:
+      enabled: false   # desactiva schema.sql de Boot (usaremos Flyway)
 
-  sql:
-    init:
-      mode: always
-      platform: mysql
+  flyway:
+    enabled: true
+    url: jdbc:mysql://localhost:3306/tecnologia   # JDBC solo para migraciones
+    user: root
+    password: 12345
+    locations: classpath:db/migration
+
 
   jackson:
     property-naming-strategy: SNAKE_CASE
@@ -29,6 +34,8 @@ springdoc:
     path: /swagger-ui.html
   api-docs:
     path: /v3/api-docs
+  cache:
+    disabled: true
 
-  appDescripcion: API para visualizar la traza de los pedidos
-  appVersion: 1.0.0
+appDescripcion: API para visualizar la traza de los pedidos
+appVersion: 1.0.0

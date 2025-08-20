@@ -6,12 +6,16 @@ import lombok.experimental.UtilityClass;
 public class Constants {
 
     public static final String BEAN_METHOD_CREATE_TECHNOLOGY = "create";
+    public static final String BEAN_METHOD_LIST_TECHNOLOGY = "list";
     public static final String OP_CREATE_TECHNOLOGY_SUMMARY="Crear tecnología";
+    public static final String OP_LIST_TECHNOLOGY_SUMMARY="Listar tecnologias";
     public static final String OP_CREATE_TECHNOLOGY_DESCRIPTION="Crea una nueva tecnología";
+    public static final String OP_LIST_TECHNOLOGY_DESCRIPTION="Obtiene listado completo de tecnologias";
     public static final String TECHNOLOGY_ERROR = "Error on Technology - [ERROR]";
     public  static final String X_MESSAGE_ID = "X-Message-Id";
 
     public static final String OPERATION_ID_CREATE_TECHNOLOGY = "createTechnology";
+    public static final String OPERATION_ID_LIST_TECHNOLOGY = "listTechnologies";
 
     //constantes del DTO
     public static final String SCHEMA_NAME = "Objeto de technology";

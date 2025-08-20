@@ -35,6 +35,7 @@ public class TechnologyUseCase implements TechnologyServicePort {
 
     @Override
     public Flux<Technology> list() {
-        return persistence.findAll();
+        return persistence.findAll()
+                .switchIfEmpty(Mono.error(new BusinessException(ErrorMessage.VALIDATION_ERROR)));
     }
 }

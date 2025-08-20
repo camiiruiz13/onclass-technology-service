@@ -5,6 +5,8 @@ import com.onclass.ccamilo.com.app.technologyservice.infrastructure.entrypoints.
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface TechnologyDTOMapper {
 
@@ -13,5 +15,7 @@ public interface TechnologyDTOMapper {
 
     @Mapping(source = "uniqueId", target = "idTechnology")
     TechnologyDTO toDto(Technology domain);
+
+    List<TechnologyDTO> toDtos(List<Technology> domains);
 
 }

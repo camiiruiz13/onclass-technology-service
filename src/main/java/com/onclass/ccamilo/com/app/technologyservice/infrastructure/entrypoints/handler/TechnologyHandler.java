@@ -41,11 +41,23 @@ public class TechnologyHandler {
                 )
                 .onErrorResume(ex -> {
                     log.error("Unexpected error occurred for messageId={}", messageId, ex);
-                    return buildError(HttpStatus.INTERNAL_SERVER_ERROR, messageId, ErrorMessage.VALIDATION_ERROR);
+                    return buildError(HttpStatus.INTERNAL_SERVER_ERROR, messageId, ErrorMessage.ERROR_EXCEPTION);
                 });
 
+    }
 
+    public Mono<ServerResponse> list(ServerRequest request) {
 
+        String messageId = getMessageId(request);
+
+        return servicePort.list()
+                .collectList()
+                .map(technologyDTOMapper::toDtos)
+                .doOnSuccess(list->log.info("Technologies listed. size={} messageId={}", list.size(), messageId))
+                .flatMap(list->ServerResponse.ok().bodyValue(new SuccesResponseDTO(ErrorMessage.TECHNOLOGIES_LIST_SUCCESS.getMessage(), list)))
+                .doOnError(ex -> log.error("Error getting technologies. messageId={}", messageId, ex))
+                .onErrorResume(BusinessException.class, ex->buildError(HttpStatus.BAD_REQUEST, messageId, ErrorMessage.VALIDATION_ERROR))
+                .onErrorResume(BusinessException.class, ex->buildError(HttpStatus.BAD_REQUEST, messageId, ErrorMessage.ERROR_EXCEPTION));
     }
 
     private String getMessageId(ServerRequest req) {
